@@ -1,0 +1,31 @@
+def twoStacks(maxSum, a, b):
+    sum_a = 0
+    count_a = 0
+    for i in range(len(a)):
+        if sum_a + a[i] > maxSum:
+            break
+        sum_a += a[i]
+        count_a += 1
+    max_score = count_a  # Start with the maximum possible from stack a
+    sum_b = 0
+    count_b = 0
+    for j in range(len(b)):
+        sum_b += b[j]
+        count_b += 1
+        while sum_a + sum_b > maxSum and count_a > 0:
+            sum_a -= a[count_a - 1]
+            count_a -= 1
+        if sum_a + sum_b <= maxSum:
+            max_score = max(max_score, count_a + count_b)
+    return max_score
+t = int(input())  
+results = []
+for _ in range(t):
+    n, m, maxSum = map(int, input().split())
+    a = list(map(int, input().split()))
+    b = list(map(int, input().split()))
+    results.append(twoStacks(maxSum, a, b))
+
+
+for result in results:
+    print(result)
