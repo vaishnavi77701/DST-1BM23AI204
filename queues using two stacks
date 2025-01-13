@@ -1,0 +1,38 @@
+class QueueUsingTwoStacks:
+    def __init__(self):
+        self.stack_in = []
+        self.stack_out = []
+
+    def enqueue(self, x):
+        self.stack_in.append(x)
+
+    def dequeue(self):
+        self._transfer()
+        if self.stack_out:
+            self.stack_out.pop()
+
+    def print_front(self):
+        self._transfer()
+        if self.stack_out:
+            print(self.stack_out[-1])
+
+    def _transfer(self):
+        """Transfer elements from stack_in to stack_out if stack_out is empty."""
+        if not self.stack_out:
+            while self.stack_in:
+                self.stack_out.append(self.stack_in.pop())
+
+
+
+n = int(input())  
+queue = QueueUsingTwoStacks()
+
+for _ in range(n):
+    query = input().split()
+    operation = int(query[0])
+    if operation == 1:  
+        queue.enqueue(int(query[1]))
+    elif operation == 2:  
+        queue.dequeue()
+    elif operation == 3:  
+        queue.print_front()
